@@ -9,6 +9,11 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Image } from '../../types';
 
+interface ApiResponse {
+    results: Image [];
+    total: number;
+    total_pages: number;
+}
 
 interface Error {
     message: string;
@@ -33,7 +38,7 @@ export default function App () {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get(
+                const response = await axios.get<ApiResponse>(
                     "https://api.unsplash.com/search/photos",
                     {
                         params: { query, page, per_page: 12 },
