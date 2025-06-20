@@ -1,26 +1,28 @@
 import { useState,useEffect } from 'react'
-import SearchBar from "./components/SearchBar";
-import ImageGallery from "./components/ImageGallery";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn";
-import ImageModal from "./components/ImageModal";
+import SearchBar from "../SearchBar/SearchBar";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { Image } from '../../types';
 
 
-
-
+interface Error {
+    message: string;
+}
 
 
 export default function App () {
-  const[query, setQuery] = useState("");
-  const[images, setImages] = useState([]);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const[query, setQuery] = useState<string>("");
+  const[images, setImages] = useState<Image[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const accessKey = "k6f5b84iLkkM4WnOM-p0McDWOQ8O3JL8uXk7Xg6OWXM"; 
 
@@ -53,7 +55,7 @@ export default function App () {
         fetchImages();
     }, [query, page]);
 
-    const handleSearchSubmit = (searchQuery) => {
+    const handleSearchSubmit = (searchQuery: string) => {
         setQuery(searchQuery);
         setPage(1);
     };
@@ -62,7 +64,7 @@ export default function App () {
         setPage((prev) => prev + 1);
     };
 
-    const openModal = (image) => {
+    const openModal = (image: Image) => {
         setSelectedImage(image);
         setShowModal(true);
     };
